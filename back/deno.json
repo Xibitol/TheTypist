@@ -1,0 +1,12 @@
+{
+	"name": "@theTypist/back",
+	"version": "1.0.0-b.0",
+	"license": "LGPL-v3",
+
+	"exports": "./resource/public/index.php",
+	"tasks": {
+		"clean": "/bin/rm -vr ../out/back/ || exit 0",
+		"debug": "echo \"Not Implemented.\"",
+		"compile": "echo \"Not Implemented.\""
+	}
+}
