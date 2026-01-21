@@ -21,7 +21,7 @@ see https://www.gnu.org/licenses/.
 		"rootDir": "src",
 
 		"paths": {
-			"@/*": ["src/*"],
+			"@/*": ["src/*.ts"],
 
 			"@p/*": ["src/*/index.ts"],
 
