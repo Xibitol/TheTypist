@@ -178,7 +178,8 @@ class Project{
 			},
 			plugins: [
 				new HtmlWebpackPlugin({
-					template: `${this.publicResourceDir}/${Project.INDEX_MARKUP_FILE}`
+					template: `${this.publicResourceDir}/${Project.INDEX_MARKUP_FILE}`,
+					scriptLoading: "defer"
 				}),
 				new MiniCssExtractPlugin({
 					filename: this.styleOutFile,
