@@ -1,13 +1,19 @@
+import {type NavigatorStorageService, LocalStorageService} from "@p/service";
 import {Page, MainMenuPage} from "@p/view";
 
 export default class TheTypist{
 
 	private static instance?: TheTypist;
 
+	public readonly navigatorStorage: NavigatorStorageService;
+
 	/* HTML Elements */
 	private readonly pages: Page[] = [];
 
 	constructor(){
+		this.navigatorStorage = new LocalStorageService();
+
+		// Listeners
 		self.addEventListener("load", this.run.bind(this, self));
 	}
 
