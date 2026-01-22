@@ -1,0 +1,26 @@
+export default class Difficulty{
+
+	public static readonly EASY = new Difficulty("EASY", "I'm a newbie");
+	public static readonly MEDIUM = new Difficulty("MEDIUM", "Make me suffer");
+	public static readonly HARD = new Difficulty("HARD", "Nightmare");
+
+	public readonly name: string;
+	public readonly label: string;
+
+	private constructor(name: string, label: string){
+		this.name = name;
+		this.label = label;
+	}
+
+	// GETTERS
+	public static get values(): Difficulty[]{
+		return [
+			Difficulty.EASY,
+			Difficulty.MEDIUM,
+			Difficulty.HARD
+		];
+	}
+
+	// FUNCTIONS
+	public toString(): string{ return this.name; }
+}
