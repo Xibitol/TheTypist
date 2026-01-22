@@ -119,7 +119,8 @@ class Project{
 			"@r/template/*": `${this.templateResourceDir}/*`,
 			"@r/style/*": `${this.styleResourceDir}/*`,
 			"@r/lang/*": `${this.langResourceDir}/*`,
-			"@r/image/*": `${this.imageResourceDir}/*`
+			"@r/image/*": `${this.imageResourceDir}/*`,
+			"@r/*": `${this.resourceDir}/*`
 		};
 	}
 
@@ -150,6 +151,7 @@ class Project{
 						}],
 						exclude: Project.NODE_MODULES_DIR
 					},
+
 					{
 						test: /\.html$/u,
 						resourceQuery: /string/,
