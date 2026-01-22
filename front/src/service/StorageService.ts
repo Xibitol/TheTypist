@@ -1,11 +1,8 @@
-export default abstract class StorageService{
+export default abstract class StorageService<T>{
 
 	// GETTERS
-	public abstract get(id: string): Promise<string | null>;
+	public abstract get(id: string): Promise<T | null>;
 
 	// SETTERS
-	public abstract set(id: string, value: string | null): void;
-	public setJSON(id: string, value: unknown): void{
-		this.set(id, JSON.stringify(value));
-	}
+	public abstract set(id: string, value: T | null): void;
 }

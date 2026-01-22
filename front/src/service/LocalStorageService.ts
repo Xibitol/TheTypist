@@ -1,4 +1,4 @@
-import NavigatorStorageService from "@/service/NavigatorStorageService";
+import {NavigatorStorageService} from "@p/service";
 
 export default class LocalStorageService extends NavigatorStorageService{
 

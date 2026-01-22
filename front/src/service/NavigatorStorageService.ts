@@ -1,6 +1,8 @@
-import StorageService from "@/service/StorageService";
+import {StorageService} from "@p/service";
 
-export default abstract class NavigatorStorageService extends StorageService{
+export default abstract class NavigatorStorageService
+	extends StorageService<string | null>
+{
 
 	private storage: Storage;
 
@@ -18,7 +20,7 @@ export default abstract class NavigatorStorageService extends StorageService{
 	}
 
 	// SETTERS
-	public set(id: string, value?: string | null): void{
+	public set(id: string, value: string | null): void{
 		this.storage.setItem(id, `${value}`);
 	}
 }
