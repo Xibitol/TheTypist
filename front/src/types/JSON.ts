@@ -6,6 +6,9 @@ type JSONTypistText = {
 	theme: Theme,
 	number: number
 };
+type JSONTexts = {
+	[key: string]: string
+};
 
 type JSONHighScore = {
 	time: number,
@@ -15,5 +18,7 @@ type JSONHighScore = {
 
 export type {
 	JSONTypistText,
+	JSONTexts,
+
 	JSONHighScore
 };

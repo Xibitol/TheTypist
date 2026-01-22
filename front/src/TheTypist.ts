@@ -1,4 +1,7 @@
-import {type NavigatorStorageService, LocalStorageService} from "@p/service";
+import {type NavigatorStorageService,
+	LocalStorageService,
+	JSONStorageService
+} from "@p/service";
 import {Page, MainMenuPage} from "@p/view";
 
 export default class TheTypist{
@@ -6,12 +9,14 @@ export default class TheTypist{
 	private static instance?: TheTypist;
 
 	public readonly navigatorStorage: NavigatorStorageService;
+	public readonly jsonStorage: JSONStorageService;
 
 	/* HTML Elements */
 	private readonly pages: Page[] = [];
 
 	constructor(){
 		this.navigatorStorage = new LocalStorageService();
+		this.jsonStorage = new JSONStorageService();
 
 		// Listeners
 		self.addEventListener("load", this.run.bind(this, self));
@@ -23,6 +28,10 @@ export default class TheTypist{
 			this.instance = new TheTypist();
 
 		return this.instance;
+	}
+
+	public getPage<P extends Page>(pageClass: new() => P): P | undefined{
+		return this.pages.find(p => p instanceof pageClass) as P;
 	}
 
 	// FUNCTIONS
