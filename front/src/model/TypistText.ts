@@ -1,5 +1,6 @@
-import type {JSONTypistText} from "@/types/JSON";
+import type {JSONTypistText, JSONTexts} from "@/types/JSON";
 
+import type {JSONStorageService} from "@p/service";
 import {Model, type Difficulty, type Language, type Theme} from "@p/model";
 
 export default class TypistText extends Model{
@@ -10,7 +11,7 @@ export default class TypistText extends Model{
 	public readonly language: Language;
 	public readonly theme: Theme;
 	public readonly number: number;
-	private text: string = "";
+	private _text?: string | null;
 
 	public constructor(
 		difficulty: Difficulty,
@@ -29,8 +30,25 @@ export default class TypistText extends Model{
 	}
 
 	// GETTERS
+	public get text(): string | null | undefined{
+		return this._text;
+	}
+	public get length(): number | undefined{
+		return this.text?.length;
+	}
+
 	public getTextIdentifier(): string{
 		return `${this.difficulty}.${this.language}.${this.theme}-${this.number}`;
+	}
+
+	// FUNCTIONS
+	public loadText(storage: JSONStorageService){
+		storage.get(TypistText.TEXTS_STORAGE_ID).then(v => {
+			if(v === null || !(v instanceof Object))
+				throw Error(`Unexpected array in texts (${v});`);
+
+			this._text = (v as JSONTexts)[this.getTextIdentifier()] ?? null;
+		}).catch(console.error);
 	}
 
 	public toEntry(): JSONTypistText{
