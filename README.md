@@ -166,3 +166,5 @@ https://www.gnu.org/licenses/.
 > [Xibitol](https://github.com/Xibitol)
 
 > [Pierre-Van](https://github.com/Pierre-Van)
+
+> [Veritis](https://github.com/Veritis23) (Text's Writer)
