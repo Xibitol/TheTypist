@@ -14,7 +14,7 @@ export default class TheTypist{
 	/* HTML Elements */
 	private readonly pages: Page[] = [];
 
-	constructor(){
+	private constructor(){
 		this.navigatorStorage = new NavigatorStorageService(localStorage);
 		this.jsonStorage = new JSONStorageService();
 
