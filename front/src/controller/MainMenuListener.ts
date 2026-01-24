@@ -1,6 +1,6 @@
+import {Difficulty, Language, Theme, TypistText} from "@p/model";
 import {type MainMenuPage, TypingPage} from "@p/view";
 import type TheTypist from "@/TheTypist";
-import {Difficulty, Language, Theme, TypistText} from "@p/model";
 
 export default class MainMenuListener{
 
