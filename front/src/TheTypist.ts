@@ -1,8 +1,6 @@
-import {type NavigatorStorageService,
-	LocalStorageService,
-	JSONStorageService
-} from "@p/service";
+import {JSONStorageService, NavigatorStorageService} from "@p/service";
 import {Page, MainMenuPage} from "@p/view";
+import {HighScore} from "@p/model";
 
 export default class TheTypist{
 
@@ -11,15 +9,19 @@ export default class TheTypist{
 	public readonly navigatorStorage: NavigatorStorageService;
 	public readonly jsonStorage: JSONStorageService;
 
+	private _highScore: HighScore = HighScore.fromDefaults();
+
 	/* HTML Elements */
 	private readonly pages: Page[] = [];
 
 	constructor(){
-		this.navigatorStorage = new LocalStorageService();
+		this.navigatorStorage = new NavigatorStorageService(localStorage);
 		this.jsonStorage = new JSONStorageService();
 
 		// Listeners
-		self.addEventListener("load", this.run.bind(this, self));
+		self.addEventListener("load", this.run.bind(this, self), {
+			once: true
+		});
 	}
 
 	// GETTERS
@@ -30,13 +32,29 @@ export default class TheTypist{
 		return this.instance;
 	}
 
+	public get highScore(): HighScore{ return this._highScore; }
 	public getPage<P extends Page>(pageClass: new() => P): P | undefined{
 		return this.pages.find(p => p instanceof pageClass) as P;
 	}
 
+	// SETTERS
+	public setHighScore(highScore: HighScore){
+		if(!this.highScore.betterThan(highScore))
+			return;
+
+		this._highScore = highScore;
+		this.highScore.save(this.navigatorStorage);
+	}
+
 	// FUNCTIONS
 	public run(_window: Window){
-		console.log(`${TheTypist.name}, v1.0.0-b.0 is loading.`)
+		console.log(`${TheTypist.name}, v1.0.0-b.0 is loading.`);
+
+		HighScore.load(this.navigatorStorage)
+			.then(this.setHighScore.bind(this), console.warn)
+			.then(() => this.getPage(MainMenuPage)!.shadow.append(
+				JSON.stringify(this.highScore.toEntry())
+			));
 
 		this.pages.push(
 			...Array.from(document.querySelectorAll("#pages *"))
