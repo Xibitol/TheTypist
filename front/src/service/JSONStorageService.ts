@@ -1,18 +1,16 @@
-import {StorageService} from "@p/service";
+import type {StorageService} from "@p/service";
 
 import textsJSON from "@r/tt-tt-texts.json" with {type: "json"};
 
 type StorageContent<T> = Array<T> | {[key: string]: T};
 
 export default class JSONStorageService
-	extends StorageService<StorageContent<unknown>>
+	implements StorageService<StorageContent<unknown>>
 {
 
 	private files: Map<string, StorageContent<unknown>>;
 
 	constructor(){
-		super();
-
 		this.files = new Map();
 
 		// Files

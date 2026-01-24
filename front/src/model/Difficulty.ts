@@ -22,5 +22,14 @@ export default class Difficulty{
 	}
 
 	// FUNCTIONS
-	public toString(): string{ return this.name; }
+	public static from(name: string): Difficulty{
+		const d = Difficulty.values.find(d => d.name === name);
+
+		if(d === undefined)
+			throw new Error(`No such difficulty (Got "${name}");`);
+
+		return d;
+	}
+
+	public toJSON(): string{ return this.name; }
 }

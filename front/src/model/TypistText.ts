@@ -1,7 +1,7 @@
 import type {JSONTypistText, JSONTexts} from "@/types/JSON";
 
 import type {JSONStorageService} from "@p/service";
-import {Model, type Difficulty, type Language, type Theme} from "@p/model";
+import {Model, Difficulty, Language, Theme} from "@p/model";
 
 export default class TypistText extends Model{
 
@@ -38,10 +38,30 @@ export default class TypistText extends Model{
 	}
 
 	public getTextIdentifier(): string{
-		return `${this.difficulty}.${this.language}.${this.theme}-${this.number}`;
+		return `${this.difficulty.name}.${this.language.name}.${this.theme.name}-${this.number}`;
 	}
 
 	// FUNCTIONS
+	public static from(data: object): TypistText{
+		const ttData = data as JSONTypistText;
+
+		if(typeof ttData.difficulty != "string"
+			|| typeof ttData.language != "string"
+			|| typeof ttData.theme != "string"
+			|| typeof ttData.number != "number"
+		)
+			throw new Error(
+				`TypistText can't be recognized (Got "${JSON.stringify(ttData)}");`
+			);
+
+		return new TypistText(
+			Difficulty.from(ttData.difficulty),
+			Language.from(ttData.language),
+			Theme.from(ttData.theme),
+			ttData.number
+		);
+	}
+
 	public loadText(storage: JSONStorageService){
 		storage.get(TypistText.TEXTS_STORAGE_ID).then(v => {
 			if(v === null || !(v instanceof Object))

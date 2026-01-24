@@ -1,14 +1,12 @@
-import {StorageService} from "@p/service";
+import type {StorageService, JSONifiableStorage} from "@p/service";
 
-export default abstract class NavigatorStorageService
-	extends StorageService<string | null>
+export default class NavigatorStorageService
+	implements StorageService<string | null>, JSONifiableStorage
 {
 
 	private storage: Storage;
 
 	constructor(storage: Storage){
-		super();
-
 		this.storage = storage;
 	}
 
@@ -18,9 +16,16 @@ export default abstract class NavigatorStorageService
 			this.storage.getItem(id)
 		));
 	}
+	public async getJSON(id: string): Promise<unknown>{
+		const v = await this.get(id);
+    	return v !== null ? JSON.parse(v) : null;
+	}
 
 	// SETTERS
 	public set(id: string, value: string | null): void{
 		this.storage.setItem(id, `${value}`);
+	}
+	public setJSON(id: string, value: unknown): void{
+		this.set(id, JSON.stringify(value));
 	}
 }

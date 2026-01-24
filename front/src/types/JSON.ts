@@ -13,7 +13,8 @@ type JSONTexts = {
 type JSONHighScore = {
 	time: number,
 	mistakes: number,
-	text: JSONTypistText
+	date: number, // Milliseconds
+	text: JSONTypistText | null
 };
 
 export type {

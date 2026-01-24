@@ -26,5 +26,14 @@ export default class Theme{
 	}
 
 	// FUNCTIONS
-	public toString(): string{ return this.name; }
+	public static from(name: string): Theme{
+		const t = Theme.values.find(t => t.name === name);
+
+		if(t === undefined)
+			throw new Error(`No such theme (Got "${name}");`);
+
+		return t;
+	}
+
+	public toJSON(): string{ return this.name; }
 }

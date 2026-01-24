@@ -1,8 +1,8 @@
-export default abstract class StorageService<T>{
+export default interface StorageService<T>{
 
 	// GETTERS
-	public abstract get(id: string): Promise<T | null>;
+	get(id: string): Promise<T | null>;
 
 	// SETTERS
-	public abstract set(id: string, value: T | null): void;
+	set(id: string, value: T | null): void;
 }

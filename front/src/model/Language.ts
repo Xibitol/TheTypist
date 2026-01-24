@@ -22,5 +22,14 @@ export default class Language{
 	}
 
 	// FUNCTIONS
-	public toString(): string{ return this.name; }
+	public static from(name: string): Language{
+		const l = Language.values.find(l => l.name === name);
+
+		if(l === undefined)
+			throw new Error(`No such language (Got "${name}");`);
+
+		return l;
+	}
+
+	public toJSON(): string{ return this.name; }
 }
