@@ -53,7 +53,7 @@ export default class TheTypist{
 		HighScore.load(this.navigatorStorage)
 			.then(this.setHighScore.bind(this), console.warn)
 			.then(() => this.getPage(MainMenuPage)!.shadow.append(
-				JSON.stringify(this.highScore.toEntry())
+				JSON.stringify(this.highScore.toEntry()) + ` -> ${this.highScore.getScore().toFixed(2)}`
 			));
 
 		this.pages.push(
