@@ -7,6 +7,10 @@ export default class HighScore extends Model{
 
 	private static readonly STORAGE_ID = "tt-highscore";
 
+	private static readonly MISTAKES_COEFFICIENT = 1.2;
+	private static readonly ZERO_POINT_LIMIT =
+		300*HighScore.MISTAKES_COEFFICIENT + 4*60;
+
 	public readonly time: number; // In seconds.
 	public readonly mistakes: number;
 	private readonly _date: Date;
@@ -35,6 +39,18 @@ export default class HighScore extends Model{
 
 	// GETTERS
 	public get date(): Date{ return new Date(this._date); }
+
+	public getScore(): number{
+		if(this.text === null) return 0;
+		const m = this.mistakes*HighScore.MISTAKES_COEFFICIENT;
+		const t = this.time/1000;
+		const z = HighScore.ZERO_POINT_LIMIT;
+
+		const d = this.text.difficulty.coefficient;
+		const s = this.text.theme.coefficient;
+
+		return (-(m + t) + z)*d*s*1.5;
+	}
 
 	// FUNCTIONS
 	public static fromDefaults(): HighScore{
@@ -73,7 +89,7 @@ export default class HighScore extends Model{
 				throw Error();
 
 			return HighScore.from(v as object);
-		}catch(e){
+		}catch{
 			return HighScore.fromDefaults();
 		}
 	}

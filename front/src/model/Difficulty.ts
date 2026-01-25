@@ -1,15 +1,23 @@
 export default class Difficulty{
 
-	public static readonly EASY = new Difficulty("EASY", "I'm a newbie");
-	public static readonly MEDIUM = new Difficulty("MEDIUM", "Make me suffer");
-	public static readonly HARD = new Difficulty("HARD", "Nightmare");
+	public static readonly EASY = new Difficulty(
+		"EASY", "I'm a newbie", 1
+	);
+	public static readonly MEDIUM = new Difficulty(
+		"MEDIUM", "Make me suffer", 2
+	);
+	public static readonly HARD = new Difficulty(
+		"HARD", "Nightmare", 3
+	);
 
 	public readonly name: string;
 	public readonly label: string;
+	public readonly coefficient: number;
 
-	private constructor(name: string, label: string){
+	private constructor(name: string, label: string, coefficient: number){
 		this.name = name;
 		this.label = label;
+		this.coefficient = coefficient;
 	}
 
 	// GETTERS

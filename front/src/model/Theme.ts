@@ -1,18 +1,26 @@
 export default class Theme{
 
-	public static readonly STORY = new Theme("STORY", "Story");
-	public static readonly LAW = new Theme("LAW", "European Constitution");
-	public static readonly SCIENTIFIC = new Theme(
-		"SCIENTIFIC", "Scientific"
+	public static readonly STORY = new Theme(
+		"STORY", "Story", 1
 	);
-	public static readonly RANDOM = new Theme("RANDOM", "Random");
+	public static readonly LAW = new Theme(
+		"LAW", "European Constitution", 2
+	);
+	public static readonly SCIENTIFIC = new Theme(
+		"SCIENTIFIC", "Scientific", 3
+	);
+	public static readonly RANDOM = new Theme(
+		"RANDOM", "Random", 4
+	);
 
 	public readonly name: string;
 	public readonly label: string;
+	public readonly coefficient: number;
 
-	private constructor(name: string, label: string){
+	private constructor(name: string, label: string, coefficient: number){
 		this.name = name;
 		this.label = label;
+		this.coefficient = coefficient;
 	}
 
 	// GETTERS
