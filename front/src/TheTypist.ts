@@ -39,7 +39,7 @@ export default class TheTypist{
 
 	// SETTERS
 	public setHighScore(highScore: HighScore){
-		if(!this.highScore.betterThan(highScore))
+		if(!highScore.betterThan(this.highScore))
 			return;
 
 		this._highScore = highScore;

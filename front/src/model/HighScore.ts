@@ -95,8 +95,7 @@ export default class HighScore extends Model{
 	}
 
 	public betterThan(_other: HighScore): boolean{
-		// TODO: To implement.
-		return true;
+		return this.getScore() > _other.getScore();
 	}
 
 	public toEntry(): JSONHighScore{
