@@ -59,19 +59,14 @@ export default class HighScore extends Model{
 	public static from(data: object): HighScore{
 		const hsData = data as JSONHighScore;
 
-		console.log(typeof hsData.time != "number"
-			|| typeof hsData.mistakes != "number"
-			|| typeof hsData.date != "number"
-			|| (hsData.text !== null && typeof hsData.text != "object"));
 		if(typeof hsData.time != "number"
 			|| typeof hsData.mistakes != "number"
 			|| typeof hsData.date != "number"
 			|| (hsData.text !== null && typeof hsData.text != "object")
-		){
+		)
 			throw new Error(
 				`HighScore can't be recognized (Got "${JSON.stringify(hsData)}");`
 			);
-		}
 
 		return new HighScore(
 			hsData.time,
