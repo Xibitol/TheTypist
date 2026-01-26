@@ -8,6 +8,9 @@ export default abstract class Page extends View{
 		super(htmlTemplate, cssStyle + pageStyle);
 	}
 
+	// GETTERS
+	public isShown(){ return this.style.display === ""; }
+
 	// FUNCTIONS
 	public hide(){ this.style.display = "none"; }
 	public show(){ this.style.display = ""; }

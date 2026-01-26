@@ -22,12 +22,8 @@ see https://www.gnu.org/licenses/.
 
 		"paths": {
 			"@/*": ["src/*.ts"],
-
 			"@p/*": ["src/*/index.ts"],
-
-			"@r/template/*": ["resource/template/*"],
-			"@r/style/*": ["resource/style/*"],
-			"@lang/*": ["resource/lang/*"]
+			"@r/*": ["resource/*"]
 		}
 	}
 }
