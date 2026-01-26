@@ -24,4 +24,12 @@ export default class MainMenuListener{
 		this.context.getPage(TypingPage)!.setText(this.t);
 		this.context.open(TypingPage);
 	}
+
+	public onPageVisibilityChanged(_event: Event){
+		if(this.page.isShown())
+			this.page.shadow.append(
+				"\n" + JSON.stringify(this.context.highScore.toEntry())
+				+ ` -> ${this.context.highScore.getScore().toFixed(2)}`
+			);
+	}
 }
