@@ -50,18 +50,14 @@ export default class TheTypist{
 	public run(_window: Window){
 		console.log(`${TheTypist.name}, v1.0.0-b.0 is loading.`);
 
-		HighScore.load(this.navigatorStorage)
-			.then(this.setHighScore.bind(this), console.warn)
-			.then(() => this.getPage(MainMenuPage)!.shadow.append(
-				JSON.stringify(this.highScore.toEntry()) + ` -> ${this.highScore.getScore().toFixed(2)}`
-			));
-
 		this.pages.push(
 			...Array.from(document.querySelectorAll("#pages *"))
 				.filter(e => e instanceof Page)
 		);
 
-		this.open(MainMenuPage);
+		HighScore.load(this.navigatorStorage)
+			.then(this.setHighScore.bind(this), console.warn)
+			.then(() => this.open(MainMenuPage));
 	}
 
 	public open<P extends Page>(pageClass: new() => P){

@@ -18,5 +18,9 @@ export default class MainMenuPage extends Page{
 		this.shadow.getElementById("mmp-play")?.addEventListener("click",
 			listener.onPlayButtonClicked.bind(listener)
 		);
+
+		this.addEventListener(Page.VISIBILITY_EVENT_NAME,
+			listener.onPageVisibilityChanged.bind(listener)
+		);
 	}
 }
