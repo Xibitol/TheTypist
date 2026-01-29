@@ -1,0 +1,7 @@
+#mmp-form{
+    margin-bottom: var(--space);
+}
+
+#mmp-highScore{
+    font-weight: bold;
+}

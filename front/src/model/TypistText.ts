@@ -62,13 +62,20 @@ export default class TypistText extends Model{
 		);
 	}
 
-	public loadText(storage: JSONStorageService){
-		storage.get(TypistText.TEXTS_STORAGE_ID).then(v => {
-			if(v === null || !(v instanceof Object))
-				throw Error(`Unexpected array in texts (${v});`);
+	public loadText(storage: JSONStorageService): Promise<TypistText>{
+		return storage.get(TypistText.TEXTS_STORAGE_ID).then(
+			v => {
+				if(v === null || !(v instanceof Object))
+					throw Error(`Unexpected array in texts (${v});`);
 
-			this._text = (v as JSONTexts)[this.getTextIdentifier()] ?? null;
-		}).catch(console.error);
+				this._text = (v as JSONTexts)[this.getTextIdentifier()] ?? null;
+				return this;
+			},
+			err => {
+				console.error(err);
+				return this;
+			}
+		);
 	}
 
 	public toEntry(): JSONTypistText{
