@@ -1,0 +1,32 @@
+:host{
+	position: relative;
+}
+
+#tp-text{
+	position: relative;
+
+	font-family: monospace;
+	white-space: preserve;
+}
+.text--part__valid{
+	color: green;
+}
+.text--part__mistake{
+	color: red;
+	text-decoration-line: line-through;
+}
+#tp-cursor:last-of-type{
+	content: "";
+	position: absolute;
+	display: inline-block;
+
+	width: 2px;
+	height: 1rem;
+
+	background-color: var(--color-onSurface);
+}
+
+#tp-input{
+	position: absolute;
+	opacity: 0;
+}
