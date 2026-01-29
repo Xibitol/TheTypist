@@ -13,7 +13,8 @@
 }
 
 #sp-score{
-	font-size: 3.5rem
+	color: var(--color-primary);
+	font-size: 3.5rem;
 }
 #sp-time, #sp-mistakes{
 	font-weight: bold;
