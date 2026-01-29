@@ -49,6 +49,7 @@ export default class MainMenuListener{
 	}
 
 	public onDebugSaveClicked(_event: PointerEvent){
+		console.log(this.page.getTypedText()!.getHighscore());
 		this.context.setHighScore(this.page.getTypedText()!.getHighscore());
 		this.context.open(MainMenuPage);
 	}
