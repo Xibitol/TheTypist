@@ -24,6 +24,8 @@ see https://www.gnu.org/licenses/.
 			"@/*": ["src/*.ts"],
 			"@p/*": ["src/*/index.ts"],
 			"@r/*": ["resource/*"]
-		}
+		},
+
+		"declaration": false
 	}
 }

@@ -17,7 +17,6 @@ see https://www.gnu.org/licenses/.
 {
 	"compilerOptions": {
 		"target": "ESNext",
-		"composite": true,
 
 		"strict": true,
 		"strictNullChecks": true,
