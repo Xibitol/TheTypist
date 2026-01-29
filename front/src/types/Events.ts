@@ -1,4 +1,4 @@
-type TTEventMap = "add" | "remove";
+type TTEventMap = "start" | "add" | "remove";
 type TTEventInit = EventInit & {
 	added: string,
 	count: number,

@@ -9,13 +9,18 @@ import mmpStyle from "@r/style/typing-page.css?string";
 
 export default class TypingPage extends Page{
 
+	private static readonly TIMER_DELAY = 30; // Not 1 for optimizations.
+
 	private context: TheTypist;
 	private _text?: TypistText = undefined;
 	private typed?: TypedText = undefined;
 
+	private timeInterval: number | null = null;
+
 	/* HTML Elements */
 	private readonly textParagraph: HTMLParagraphElement;
 	private readonly textInput: HTMLInputElement;
+	private readonly timerParagraph: HTMLParagraphElement;
 
 	constructor(){
 		super(mmpTemplate, mmpStyle);
@@ -27,6 +32,9 @@ export default class TypingPage extends Page{
 		);
 		this.textInput = (
 			this.shadow.getElementById("tp-input") as HTMLInputElement
+		);
+		this.timerParagraph = (
+			this.shadow.getElementById("tp-timer") as HTMLParagraphElement
 		);
 
 		// Listeners
@@ -65,7 +73,17 @@ export default class TypingPage extends Page{
 			const textNode = this.textParagraph.lastChild;
 			if(textNode instanceof Text) textNode.remove();
 
-			// TODO: Remove listeners.
+			if(this.typed !== undefined){
+				this.typed.removeEventListener(TypedText.START_EVENT_NAME,
+					this.onTypedTextStart.bind(this)
+				);
+				this.typed.removeEventListener(TypedText.ADD_EVENT_NAME,
+					this.onTypedTextAdd.bind(this)
+				);
+				this.typed.removeEventListener(TypedText.REMOVE_EVENT_NAME,
+					this.onTypedTextRemoved.bind(this)
+				);
+			}
 		}
 
 		this._text = text;
@@ -75,6 +93,9 @@ export default class TypingPage extends Page{
 				this.textParagraph.append(new Text(this._text.text));
 
 			this.typed = new TypedText(this._text);
+			this.typed.addEventListener(TypedText.START_EVENT_NAME,
+				this.onTypedTextStart.bind(this)
+			);
 			this.typed.addEventListener(TypedText.ADD_EVENT_NAME,
 				this.onTypedTextAdd.bind(this)
 			);
@@ -90,6 +111,14 @@ export default class TypingPage extends Page{
 	}
 
 	// LISTENERS
+	private onTypedTextStart(_event: TypedTextEvent): void{
+		if(this.timeInterval !== null)
+			clearInterval(this.timeInterval);
+
+		this.timeInterval = setInterval(
+			this.onTimerUpdate.bind(this), TypingPage.TIMER_DELAY
+		);
+	}
 	private onTypedTextAdd(event: TypedTextEvent): void{
 		const className = !event.isMistake ?
 			"text--part__valid" : "text--part__mistake";
@@ -135,5 +164,13 @@ export default class TypingPage extends Page{
 
 			i += cCount;
 		}
+	}
+
+	private onTimerUpdate(): void{
+		if(this.typed === undefined) return;
+
+		const d = new Date(this.typed.getTime());
+		this.timerParagraph.textContent =
+			`${d.getMinutes()}:${d.getSeconds()}.${d.getMilliseconds()}`;
 	}
 }

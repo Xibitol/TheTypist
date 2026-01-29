@@ -29,11 +29,13 @@ interface TypedText extends Model{
 
 class TypedText extends Model{
 
+	public static readonly START_EVENT_NAME = "start";
 	public static readonly ADD_EVENT_NAME = "add";
 	public static readonly REMOVE_EVENT_NAME = "remove";
 
 	public readonly text: TypistText;
 	private _answer: string = "";
+	private startTime: number | null = null;
 
 	public constructor(text: TypistText){
 		super();
@@ -44,6 +46,9 @@ class TypedText extends Model{
 	// GETTERS
 	public get answer(): string{ return this._answer; }
 
+	public getTime(): number{
+		return Date.now() - (this.startTime ?? 0);
+	}
 	public getDifferences(): number{
 		if(this.text.text === undefined || this.text.text === null)
 			throw new Error("TypistText text isn't available;");
@@ -59,7 +64,12 @@ class TypedText extends Model{
 		return differences;
 	}
 	public getHighscore(): HighScore{
-		return new HighScore(0, this.getDifferences(), new Date(), this.text);
+		return new HighScore(
+			this.getTime(),
+			this.getDifferences(),
+			new Date((this.startTime ?? 0) + this.getTime()),
+			this.text
+		);
 	}
 
 	// SETTERS
@@ -67,21 +77,32 @@ class TypedText extends Model{
 		if(char.length !== 1)
 			throw new Event("There should be only one char;");
 
-		this._answer = this._answer.concat(char);
+		this._answer = this.answer.concat(char);
 
-		this.dispatchEvent(new TypedTextEvent(TypedText.ADD_EVENT_NAME, {
+		const eventInit = {
 			added: char,
 			count: 0,
-			isMistake: char !== (this.text.text?.at(this._answer.length - 1) ?? char),
+			isMistake: this.text.text !== null && this.text.text != undefined ?
+				char !== this.text.text.at(this.answer.length - 1) : false,
 			cancelable: false
-		}));
+		};
+		if(this.startTime === null){
+			this.startTime = Date.now();
+
+			this.dispatchEvent(
+				new TypedTextEvent(TypedText.START_EVENT_NAME, eventInit)
+			);
+		}
+		this.dispatchEvent(
+			new TypedTextEvent(TypedText.ADD_EVENT_NAME, eventInit)
+		);
 	}
 	public removeCharacter(): void{
-		if(this._answer.length === 0) return;
-		this._answer = this._answer.substring(0, this._answer.length - 1);
+		if(this.answer.length === 0) return;
+		this._answer = this.answer.substring(0, this.answer.length - 1);
 
 		this.dispatchEvent(new TypedTextEvent(TypedText.REMOVE_EVENT_NAME, {
-			added: this.text.text?.at(this._answer.length) ?? "",
+			added: this.text.text?.at(this.answer.length) ?? "",
 			count: 1,
 			isMistake: false,
 			cancelable: false
