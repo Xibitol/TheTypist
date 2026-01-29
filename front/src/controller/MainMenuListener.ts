@@ -44,10 +44,7 @@ export default class MainMenuListener{
 	}
 
 	public onPageVisibilityChanged(_event: Event){
-		if(this.page.isShown())
-			this.page.shadow.append(
-				"\n" + JSON.stringify(this.context.highScore.toEntry())
-				+ ` -> ${this.context.highScore.getScore().toFixed(2)}`
-			);
+		if(this.page.isShown() && this.context.highScore !== null)
+			this.page.setHighScore(this.context.highScore);
 	}
 }
