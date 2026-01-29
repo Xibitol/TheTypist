@@ -1,4 +1,4 @@
-import {Difficulty, Language, Theme} from "@p/model";
+import {Difficulty, Language, Theme, HighScore} from "@p/model";
 import {MainMenuListener} from "@p/controller";
 import {Page} from "@p/view";
 import TheTypist from "@/TheTypist";
@@ -17,7 +17,7 @@ export default class MainMenuPage extends Page{
 		const context = TheTypist.get();
 
 		this.highScoreSpan = (
-			this.shadow.getElementById("mmp-highscore") as HTMLSpanElement
+			this.shadow.getElementById("mmp-highScore") as HTMLSpanElement
 		);
 
 		const difficultySelect = (
@@ -58,5 +58,10 @@ export default class MainMenuPage extends Page{
 		this.addEventListener(Page.VISIBILITY_EVENT_NAME,
 			listener.onPageVisibilityChanged.bind(listener)
 		);
+	}
+
+	// SETTERS
+	public setHighScore(highScore: HighScore): void{
+		this.highScoreSpan.textContent = highScore.getScore().toFixed(2);
 	}
 }
