@@ -35,10 +35,13 @@ export default class MainMenuListener{
 			Language.from(languageSelect.value),
 			Theme.from(themeSelect.value),
 			0
-		).loadText(this.context.jsonStorage).then(text => {
-			this.context.getPage(TypingPage)!.setText(text);
-			this.context.open(TypingPage);
-		});
+		).loadText(this.context.jsonStorage).then(
+			text => {
+				this.context.getPage(TypingPage)!.setText(text);
+				this.context.open(TypingPage);
+			},
+			err => alert(`No text found matching this configuration (${err}).`)
+		);
 
 		event.preventDefault();
 	}
