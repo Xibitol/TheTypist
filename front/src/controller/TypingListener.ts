@@ -1,11 +1,10 @@
-import type TheTypist from "@/TheTypist";
 import {MainMenuPage, type TypingPage} from "@p/view";
-import {HighScore} from "@p/model";
+import type TheTypist from "@/TheTypist";
 
 export default class MainMenuListener{
 
-	private context: TheTypist;
-	private page: TypingPage;
+	private readonly context: TheTypist;
+	private readonly page: TypingPage;
 
 	constructor(context: TheTypist, page: TypingPage){
 		this.context = context;
@@ -13,14 +12,44 @@ export default class MainMenuListener{
 	}
 
 	// LISTENERS
-	public onDebugSaveClicked(_event: PointerEvent){
-		const highScore = new HighScore(
-			Math.round((Math.random()*((6*60) - 60*2.5) + 60*2.5)*1000),
-			Math.round(Math.random()*256),
-			new Date(), this.page.text ?? null
-		);
+	public onKeyDown(_event: KeyboardEvent){
+		if(this.page.isShown()
+			&& this.page.text !== undefined
+		)
+			this.page.focus();
+	}
+	public onCharacterInput(event: InputEvent){
+		const typed = this.page.getTypedText();
+		if(typed === undefined) return;
 
-		this.context.setHighScore(highScore);
+		switch(event.inputType){
+			case "insertText":
+				if(event.data !== null && event.data.length === 1)
+					typed.addCharacter(event.data);
+				break;
+			case "deleteContentBackward":
+				typed.removeCharacter();
+				break;
+			default:
+				break;
+		}
+
+		event.preventDefault();
+	}
+	public onCompositionEnd(event: CompositionEvent){
+		const typed = this.page.getTypedText();
+		if(typed === undefined) return;
+
+		if(event.data.length !== 0){
+			typed.addCharacter(event.data);
+			(event.currentTarget as HTMLInputElement).value = "";
+		}
+
+		event.preventDefault();
+	}
+
+	public onDebugSaveClicked(_event: PointerEvent){
+		this.context.setHighScore(this.page.getTypedText()!.getHighscore());
 		this.context.open(MainMenuPage);
 	}
 }
