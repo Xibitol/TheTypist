@@ -11,7 +11,9 @@ export default class TypingPage extends Page{
 
 	private static readonly TIMER_DELAY = 30; // Not 1 for optimizations.
 
-	private context: TheTypist;
+	private readonly context: TheTypist;
+	private readonly listener: TypingListener;
+
 	private _text?: TypistText = undefined;
 	private typed?: TypedText = undefined;
 
@@ -38,21 +40,17 @@ export default class TypingPage extends Page{
 		);
 
 		// Listeners
-		const listener = new TypingListener(this.context, this);
+		this.listener = new TypingListener(this.context, this);
 
 		this.textInput.addEventListener("beforeinput",
-			listener.onCharacterInput.bind(listener)
+			this.listener.onCharacterInput.bind(this.listener)
 		);
 		this.textInput.addEventListener("compositionend",
-			listener.onCompositionEnd.bind(listener)
-		);
-
-		this.shadow.getElementById("tp-debug-save")?.addEventListener("click",
-			listener.onDebugSaveClicked.bind(listener)
+			this.listener.onCompositionEnd.bind(this.listener)
 		);
 
 		document.addEventListener("keydown",
-			listener.onKeyDown.bind(listener)
+			this.listener.onKeyDown.bind(this.listener)
 		);
 	}
 
@@ -86,6 +84,10 @@ export default class TypingPage extends Page{
 				this.typed.removeEventListener(TypedText.STOP_EVENT_NAME,
 					this.onTypedTextStop.bind(this)
 				);
+
+				this.typed.removeEventListener(TypedText.STOP_EVENT_NAME,
+					this.listener.onTypedTextStop.bind(this.listener)
+				);
 			}
 		}
 
@@ -107,6 +109,10 @@ export default class TypingPage extends Page{
 			);
 			this.typed.addEventListener(TypedText.STOP_EVENT_NAME,
 				this.onTypedTextStop.bind(this)
+			);
+
+			this.typed.addEventListener(TypedText.STOP_EVENT_NAME,
+				this.listener.onTypedTextStop.bind(this.listener)
 			);
 		}
 	}

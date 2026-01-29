@@ -1,5 +1,6 @@
 import {MainMenuPage, type TypingPage} from "@p/view";
 import type TheTypist from "@/TheTypist";
+import {TypedTextEvent} from "@p/event";
 
 export default class MainMenuListener{
 
@@ -48,9 +49,8 @@ export default class MainMenuListener{
 		event.preventDefault();
 	}
 
-	public onDebugSaveClicked(_event: PointerEvent){
-		console.log(this.page.getTypedText()!.getHighscore());
+	public onTypedTextStop(_event: TypedTextEvent){
+		console.log(this.page.getTypedText()!.getHighscore().getScore());
 		this.context.setHighScore(this.page.getTypedText()!.getHighscore());
-		this.context.open(MainMenuPage);
 	}
 }
