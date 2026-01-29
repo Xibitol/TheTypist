@@ -83,6 +83,9 @@ export default class TypingPage extends Page{
 				this.typed.removeEventListener(TypedText.REMOVE_EVENT_NAME,
 					this.onTypedTextRemoved.bind(this)
 				);
+				this.typed.removeEventListener(TypedText.STOP_EVENT_NAME,
+					this.onTypedTextStop.bind(this)
+				);
 			}
 		}
 
@@ -102,7 +105,19 @@ export default class TypingPage extends Page{
 			this.typed.addEventListener(TypedText.REMOVE_EVENT_NAME,
 				this.onTypedTextRemoved.bind(this)
 			);
+			this.typed.addEventListener(TypedText.STOP_EVENT_NAME,
+				this.onTypedTextStop.bind(this)
+			);
 		}
+	}
+
+	// SETTERS
+	private updateTimer(): void{
+		if(this.typed === undefined) return;
+
+		const d = new Date(this.typed.getTime());
+		this.timerParagraph.textContent =
+			`${d.getMinutes()}:${d.getSeconds()}.${d.getMilliseconds()}`;
 	}
 
 	// FUNCTIONS
@@ -116,7 +131,7 @@ export default class TypingPage extends Page{
 			clearInterval(this.timeInterval);
 
 		this.timeInterval = setInterval(
-			this.onTimerUpdate.bind(this), TypingPage.TIMER_DELAY
+			this.updateTimer.bind(this), TypingPage.TIMER_DELAY
 		);
 	}
 	private onTypedTextAdd(event: TypedTextEvent): void{
@@ -165,12 +180,10 @@ export default class TypingPage extends Page{
 			i += cCount;
 		}
 	}
+	private onTypedTextStop(_event: TypedTextEvent): void{
+		if(this.timeInterval !== null)
+			clearInterval(this.timeInterval);
 
-	private onTimerUpdate(): void{
-		if(this.typed === undefined) return;
-
-		const d = new Date(this.typed.getTime());
-		this.timerParagraph.textContent =
-			`${d.getMinutes()}:${d.getSeconds()}.${d.getMilliseconds()}`;
+		this.updateTimer();
 	}
 }

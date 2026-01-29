@@ -32,10 +32,12 @@ class TypedText extends Model{
 	public static readonly START_EVENT_NAME = "start";
 	public static readonly ADD_EVENT_NAME = "add";
 	public static readonly REMOVE_EVENT_NAME = "remove";
+	public static readonly STOP_EVENT_NAME = "stop";
 
 	public readonly text: TypistText;
 	private _answer: string = "";
 	private startTime: number | null = null;
+	private stopTime: number | null = null;
 
 	public constructor(text: TypistText){
 		super();
@@ -46,8 +48,8 @@ class TypedText extends Model{
 	// GETTERS
 	public get answer(): string{ return this._answer; }
 
-	public getTime(): number{
-		return Date.now() - (this.startTime ?? 0);
+	public isAnswerComplete(): boolean{
+		return this.answer.length === this.text.text?.length;
 	}
 	public getDifferences(): number{
 		if(this.text.text === undefined || this.text.text === null)
@@ -63,7 +65,18 @@ class TypedText extends Model{
 
 		return differences;
 	}
+	public getStopTime(): number{
+		return this.stopTime ?? Date.now();
+	}
+	public getTime(): number{
+		return this.getStopTime() - (this.startTime ?? 0);
+	}
 	public getHighscore(): HighScore{
+		if(!this.isAnswerComplete())
+			throw new Error(
+				"Answer isn't complete (With or without mistakes);"
+			);
+
 		return new HighScore(
 			this.getTime(),
 			this.getDifferences(),
@@ -74,11 +87,14 @@ class TypedText extends Model{
 
 	// SETTERS
 	public addCharacter(char: string): void{
-		if(char.length !== 1)
-			throw new Event("There should be only one char;");
+		if(this.isAnswerComplete())
+			throw new Error("Can't add a character after answer is complete;");
+		else if(char.length !== 1)
+			throw new Error("There should be only one char;");
 
 		this._answer = this.answer.concat(char);
 
+		// Events
 		const eventInit = {
 			added: char,
 			count: 0,
@@ -86,6 +102,7 @@ class TypedText extends Model{
 				char !== this.text.text.at(this.answer.length - 1) : false,
 			cancelable: false
 		};
+
 		if(this.startTime === null){
 			this.startTime = Date.now();
 
@@ -96,9 +113,20 @@ class TypedText extends Model{
 		this.dispatchEvent(
 			new TypedTextEvent(TypedText.ADD_EVENT_NAME, eventInit)
 		);
+		if(this.isAnswerComplete()){
+			this.stopTime = Date.now();
+
+			this.dispatchEvent(
+				new TypedTextEvent(TypedText.STOP_EVENT_NAME, eventInit)
+			);
+		}
 	}
 	public removeCharacter(): void{
-		if(this.answer.length === 0) return;
+		if(this.isAnswerComplete())
+			throw new Error("Can't add a character after answer is complete;");
+		else if(this.answer.length === 0)
+			return;
+
 		this._answer = this.answer.substring(0, this.answer.length - 1);
 
 		this.dispatchEvent(new TypedTextEvent(TypedText.REMOVE_EVENT_NAME, {
