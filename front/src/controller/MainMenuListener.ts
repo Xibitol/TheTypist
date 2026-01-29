@@ -7,22 +7,40 @@ export default class MainMenuListener{
 	private context: TheTypist;
 	private page: MainMenuPage;
 
-	private t: TypistText;
-
 	constructor(context: TheTypist, page: MainMenuPage){
 		this.context = context;
 		this.page = page;
-
-		this.t = new TypistText(
-			Difficulty.MEDIUM, Language.FRENCH, Theme.STORY, 0
-		);
-		this.t.loadText(this.context.jsonStorage);
 	}
 
 	// LISTENERS
-	public onPlayButtonClicked(_event: PointerEvent){
-		this.context.getPage(TypingPage)!.setText(this.t);
-		this.context.open(TypingPage);
+	public onFormSubmitted(event: SubmitEvent){
+		if(!(event.currentTarget instanceof HTMLFormElement))
+			return;
+
+		const difficultySelect = event.currentTarget.elements.namedItem(
+			"difficulty"
+		);
+		const languageSelect = event.currentTarget.elements.namedItem(
+			"langage"
+		);
+		const themeSelect = event.currentTarget.elements.namedItem(
+			"theme"
+		);
+		if(!(difficultySelect instanceof HTMLSelectElement)) return;
+		if(!(languageSelect instanceof HTMLSelectElement)) return;
+		if(!(themeSelect instanceof HTMLSelectElement)) return;
+
+		new TypistText(
+			Difficulty.from(difficultySelect.value),
+			Language.from(languageSelect.value),
+			Theme.from(themeSelect.value),
+			0
+		).loadText(this.context.jsonStorage).then(text => {
+			this.context.getPage(TypingPage)!.setText(text);
+			this.context.open(TypingPage);
+		});
+
+		event.preventDefault();
 	}
 
 	public onPageVisibilityChanged(_event: Event){
