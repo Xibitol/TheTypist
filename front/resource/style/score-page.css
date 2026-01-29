@@ -1,3 +1,17 @@
+:host{
+	gap: var(--space);
+}
+.sp--group{
+	display: flex;
+	flex-flow: column;
+	align-items: center;
+
+	gap: var(--space-smallest);
+}
+.sp--group__row{
+	flex-flow: row;
+}
+
 #sp-score{
 	font-size: 3.5rem
 }

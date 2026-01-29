@@ -1,5 +1,22 @@
 #mmp-form{
+	display: flex;
+	flex-flow: column;
+
     margin-bottom: var(--space);
+	gap: var(--space-smallest);
+}
+.form--group{
+	display: flex;
+	flex-flow: row;
+	align-items: center;
+
+	gap: var(--space-smallest);
+}
+.group--large{
+	flex: 1;
+}
+#mmp-form input[type="submit"]{
+	align-self: center;
 }
 
 #mmp-highScore{

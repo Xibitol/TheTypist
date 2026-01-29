@@ -1,5 +1,7 @@
 :host{
 	position: relative;
+
+	gap: var(--space);
 }
 
 #tp-text{
