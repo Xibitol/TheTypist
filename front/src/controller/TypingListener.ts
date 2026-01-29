@@ -51,8 +51,10 @@ export default class MainMenuListener{
 
 	public onTypedTextStop(_event: TypedTextEvent){
 		const typed = this.page.getTypedText();
-		if(typed !== undefined)
+		if(typed !== undefined){
+			this.context.setHighScore(typed.getHighscore());
 			this.context.getPage(ScorePage)!.setScore(typed.getHighscore());
+		}
 
 		this.context.open(ScorePage);
 	}

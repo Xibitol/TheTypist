@@ -7,8 +7,10 @@
 #sp-language, #sp-difficulty, #sp-theme{
 	text-decoration-line: underline;
 }
-#sp-newHS{
-	padding-block: var(--space);
 
+div:has(> #sp-newHS){
+	padding-block: var(--space);
+}
+#sp-newHS{
 	font-weight: bold;
 }

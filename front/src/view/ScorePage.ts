@@ -8,6 +8,7 @@ import spStyle from "@r/style/score-page.css?string";
 
 export default class ScorePage extends Page{
 
+	private context: TheTypist;
 	private _score?: HighScore;
 
 	/* HTML Elements */
@@ -19,10 +20,12 @@ export default class ScorePage extends Page{
 	private readonly languageSpan: HTMLSpanElement;
 	private readonly themeSpan: HTMLSpanElement;
 
+	private readonly newHSParagraph: HTMLParagraphElement;
+
 	public constructor(){
 		super(spTemplate, spStyle);
 
-		const context = TheTypist.get();
+		this.context = TheTypist.get();
 
 		// Elements
 		this.scoreHeader = (
@@ -45,8 +48,12 @@ export default class ScorePage extends Page{
 			this.shadow.getElementById("sp-theme") as HTMLSpanElement
 		);
 
+		this.newHSParagraph = (
+			this.shadow.getElementById("sp-newHS") as HTMLParagraphElement
+		);
+
 		// Listeners
-		const listener = new ScoreListener(context, this);
+		const listener = new ScoreListener(this.context, this);
 
 		this.shadow.getElementById("sp-retry")!.addEventListener("click",
 			listener.onRetryClicked.bind(listener)
@@ -76,5 +83,8 @@ export default class ScorePage extends Page{
 			this.languageSpan.textContent = t.language.label;
 			this.themeSpan.textContent = t.theme.label.toLowerCase();
 		}
+
+		if(this.score!.getScore() !== this.context.highScore.getScore())
+			this.newHSParagraph.style.display = "none";
 	}
 }
