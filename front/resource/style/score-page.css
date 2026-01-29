@@ -1,0 +1,16 @@
+#sp-score{
+	font-size: 3.5rem
+}
+#sp-time, #sp-mistakes{
+	font-weight: bold;
+}
+#sp-language, #sp-difficulty, #sp-theme{
+	text-decoration-line: underline;
+}
+
+div:has(> #sp-newHS){
+	padding-block: var(--space);
+}
+#sp-newHS{
+	font-weight: bold;
+}

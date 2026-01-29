@@ -1,6 +1,6 @@
-import {MainMenuPage, type TypingPage} from "@p/view";
+import {type TypingPage, ScorePage} from "@p/view";
 import type TheTypist from "@/TheTypist";
-import {TypedTextEvent} from "@p/event";
+import type {TypedTextEvent} from "@p/event";
 
 export default class MainMenuListener{
 
@@ -50,7 +50,12 @@ export default class MainMenuListener{
 	}
 
 	public onTypedTextStop(_event: TypedTextEvent){
-		console.log(this.page.getTypedText()!.getHighscore().getScore());
-		this.context.setHighScore(this.page.getTypedText()!.getHighscore());
+		const typed = this.page.getTypedText();
+		if(typed !== undefined){
+			this.context.setHighScore(typed.getHighscore());
+			this.context.getPage(ScorePage)!.setScore(typed.getHighscore());
+		}
+
+		this.context.open(ScorePage);
 	}
 }

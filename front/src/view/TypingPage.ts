@@ -67,6 +67,7 @@ export default class TypingPage extends Page{
 		if(this.text !== undefined){
 			this.textParagraph.querySelectorAll(".text--part")
 				.forEach(c => c.remove());
+			this.timerParagraph.textContent = "00:00.000";
 
 			const textNode = this.textParagraph.lastChild;
 			if(textNode instanceof Text) textNode.remove();
@@ -96,6 +97,7 @@ export default class TypingPage extends Page{
 		if(this.text !== undefined){
 			if(this._text.text !== null)
 				this.textParagraph.append(new Text(this._text.text));
+			this.timerParagraph.textContent = "00:00.000";
 
 			this.typed = new TypedText(this._text);
 			this.typed.addEventListener(TypedText.START_EVENT_NAME,
