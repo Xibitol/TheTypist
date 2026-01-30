@@ -48,7 +48,7 @@ export default class TheTypist{
 
 	// FUNCTIONS
 	public run(_window: Window){
-		console.log(`${TheTypist.name}, v1.0.0-b.0 is loading.`);
+		console.log(`${TheTypist.name}, v1.0.0 is loading.`);
 
 		this.pages.push(
 			...Array.from(document.querySelectorAll("#pages *"))
