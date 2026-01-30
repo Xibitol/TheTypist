@@ -1,6 +1,6 @@
 {
 	"name": "@theTypist/back",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"license": "LGPL-v3",
 
 	"exports": "./resource/public/index.php",
