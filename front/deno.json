@@ -1,13 +1,13 @@
 {
 	"name": "@theTypist/front",
-	"version": "1.0.0-b.0",
+	"version": "1.0.0",
 	"license": "LGPL-v3",
 
 	"exports": "./src/index.ts",
 	"tasks": {
 		"clean": "/bin/rm -vr ../out/front/ || exit 0",
 		"watch": "webpack --watch --mode development",
-		"server": "bash ../bin/webserver/start.sh",
+		"server": "cd ../ && bash bin/webserver/start.sh",
 		"compile": "webpack --mode production --stats-error-details"
 	}
 }

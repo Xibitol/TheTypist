@@ -7,7 +7,7 @@ This app comes from a school project on web technologies, i.e. HTML, CSS and JS.
 Unfortunately, we aren't authorized to share the subject, but we were allowed to
 use TS instead of JS.
 
-> Version: **-**
+> Version: **1.0.0**
 
 Currently, only singleplayer is supported, but we are planning to add
 multiplayer using named cursor moving with yours!
@@ -166,3 +166,5 @@ https://www.gnu.org/licenses/.
 > [Xibitol](https://github.com/Xibitol)
 
 > [Pierre-Van](https://github.com/Pierre-Van)
+
+> [Veritis](https://github.com/Veritis23) (Text's Writer)

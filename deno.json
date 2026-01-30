@@ -16,7 +16,7 @@
 
 		"clean": "/bin/rm -vr ./out || exit 0",
 		"compile": "deno task fcompile && deno task bcompile",
-		"deploy": "bash bin/deploy.sh"
+		"deploy": "bash bin/deploy.sh front"
 	},
 
 	"vendor": true,

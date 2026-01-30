@@ -1,0 +1,91 @@
+@import url("pimousdev/base.css");
+
+:root{
+	/* Colors */
+	--color-primary: #36618e;
+	--color-onPrimary: #ffffff;
+	--color-primaryContainer: #d1e4ff;
+	--color-onPrimaryContainer: #1a4975;
+
+	--color-secondary: #535f70;
+	--color-onSecondary: #ffffff;
+	--color-secondaryContainer: #d7e3f8;
+	--color-onSecondaryContainer: #3b4858;
+
+	--color-tertiary: #6b5778;
+	--color-onTertiary: #ffffff;
+	--color-tertiaryContainer: #f3daff;
+	--color-onTertiaryContainer: #523f5f;
+
+	--color-error: #ba1a1a;
+	--color-onError: #ffffff;
+	--color-errorContainer: #ffdad6;
+	--color-onErrorContainer: #93000a;
+
+	--color-surfaceDim: #d8dAe0;
+	--color-surface: #f8f9ff;
+	--color-surfaceBright: #f8f9ff;
+	--color-surfaceContainerLowest: #ffffff;
+	--color-surfaceContainerLow: #f2f3fA;
+	--color-surfaceContainer: #eceef4;
+	--color-surfaceContainerHigh: #e6e8ee;
+	--color-surfaceContainerHighest: #e1e2e8;
+
+	--color-onSurface: #191c20;
+	--color-onSurfaceVariant: #dfe2eb;
+	--color-outline: #73777f;
+	--color-outlineVariant: #c3c6cf;
+
+	--color-inverseSurface: #2e3135;
+	--color-inverseOnSurface: #eff0f7;
+	--color-inversePrimary: #a0cafd;
+
+	--color-scrim: #000000;
+	--color-shadow: #000000;
+}
+
+@media (prefers-color-scheme: dark){
+	:root{
+		/* Colors */
+		--color-primary: #a0cafd;
+		--color-onPrimary: #003258;
+		--color-primaryContainer: #1a4975;
+		--color-onPrimaryContainer: #d1e4ff;
+
+		--color-secondary: #bbc7db;
+		--color-onSecondary: #253140;
+		--color-secondaryContainer: #3b4858;
+		--color-onSecondaryContainer: #d7e3f8;
+
+		--color-tertiary: #d7bee4;
+		--color-onTertiary: #3b2948;
+		--color-tertiaryContainer: #523f5f;
+		--color-onTertiaryContainer: #f3daff;
+
+		--color-error: #ffb4ab;
+		--color-onError: #690005;
+		--color-errorContainer: #93000a;
+		--color-onErrorContainer: #ffdad6;
+
+		--color-surfaceDim: #111418;
+		--color-surface: #111418;
+		--color-surfaceBright: #36393e;
+		--color-surfaceContainerLowest: #0b0e13;
+		--color-surfaceContainerLow: #191c20;
+		--color-surfaceContainer: #1d2024;
+		--color-surfaceContainerHigh: #272a2f;
+		--color-surfaceContainerHighest: #32353a;
+
+		--color-onSurface: #e1e2e8;
+		--color-onSurfaceVariant: #c3c6cf;
+		--color-outline: #8d9199;
+		--color-outlineVariant: #43474e;
+
+		--color-inverseSurface: #e1e2e8;
+		--color-inverseOnSurface: #2e3135;
+		--color-inversePrimary: #36618e;
+
+		--color-scrim: #000000;
+		--color-shadow: #000000;
+	}
+}
