@@ -146,7 +146,7 @@ export default class TypingPage extends Page{
 		const className = !event.isMistake ?
 			"text--part__valid" : "text--part__mistake";
 		const textNode = this.textParagraph.lastChild;
-		const lastPart = this.textParagraph.querySelector("span:last-of-type");
+		const lastPart = this.textParagraph.lastElementChild?.previousSibling;
 
 		if(textNode instanceof Text)
 			textNode.textContent = textNode.textContent.substring(1);
@@ -161,7 +161,7 @@ export default class TypingPage extends Page{
 			span.classList.add("text--part", className);
 
 			this.textParagraph.insertBefore(span,
-				lastPart ?? this.textParagraph.firstElementChild
+				this.textParagraph.lastElementChild
 			);
 		}
 	}
